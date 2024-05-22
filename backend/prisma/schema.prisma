@@ -26,5 +26,5 @@ model Dog {
   name      String?
   race      String?
   master    User?   @relation(fields: [masterId], references: [id])
-  masterId  Int?
+  masterId    Int?
 }
