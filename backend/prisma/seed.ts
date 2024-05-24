@@ -4,7 +4,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const prisma = new PrismaClient();
-const PASSWORD_SECRET_KEY="myawesomesecretkeythatiloveohandialsoliketennisbtw"
 
 const dogRaces = [
   'Labrador Retriever',
@@ -38,16 +37,34 @@ async function main() {
 
   const password = "password"
 
-  const encryptedPasswordResult = await prisma.$queryRaw`SELECT pgp_sym_encrypt(${password}, ${password_key}) AS encrypted`;
-  const encryptedPasswordBytes = encryptedPasswordResult[0].encrypted;
-  const encryptedPassword = Buffer.from(encryptedPasswordBytes).toString('base64');
+//   const encryptedPasswordResult = await prisma.$queryRaw`SELECT pgp_sym_encrypt(${password}, ${password_key}) AS encrypted`;
+//   const encryptedPasswordBytes = encryptedPasswordResult[0].encrypted;
+//   const encryptedPassword = Buffer.from(encryptedPasswordBytes).toString('base64');
 
   // Create some users
-  const usersData = Array.from({ length: 5 }, () => ({
-    email: faker.internet.email(),
-    name: faker.person.fullName(),
-    password: encryptedPassword,
-  }));
+//   const usersData = Array.from({ length: 5 }, () => ({
+//     email: faker.internet.email(),
+//     name: faker.person.fullName(),
+//     password: encryptedPassword,
+//   }));
+    const usersData = await Promise.all(Array.from({ length: 5 }, async () => {
+        const email = faker.internet.email();
+        const name = faker.person.fullName();
+        const password = "password";
+
+        // Encrypt the password using pgcrypto's pgp_sym_encrypt function
+        const encryptedPasswordResult = await prisma.$queryRaw`SELECT pgp_sym_encrypt(${password}, ${password_key}) AS encrypted`;
+        const encryptedPasswordBytes = encryptedPasswordResult[0].encrypted;
+
+        // Convert encrypted password bytes to a Base64 string
+        const encryptedPassword = Buffer.from(encryptedPasswordBytes).toString('base64');
+
+        return {
+        email,
+        name,
+        password: encryptedPassword,
+        };
+    }));
 
   await prisma.user.createMany({ data: usersData });
 
