@@ -116,5 +116,15 @@ export class AppController {
     }
   }
   
-
+  @Delete('dog/:id')
+  async deleteDog(
+    @Param('id') id: Number
+  ) : Promise<DogModel> {
+    try {
+      const dog = await this.dogService.deleteDog({id: Number(id)})
+      return dog
+    } catch (error) {
+      return error
+    }
+  }
 }
