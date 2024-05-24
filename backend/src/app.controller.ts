@@ -53,7 +53,7 @@ export class AppController {
   
   @Post('user')
   async signupUser(
-    @Body() userData: { name?: string; email: string },
+    @Body() userData: { name?: string; email: string; password: string },
   ): Promise<UserModel> {
     return this.userService.createUser(userData);
   }
@@ -123,6 +123,20 @@ export class AppController {
     try {
       const dog = await this.dogService.deleteDog({id: Number(id)})
       return dog
+    } catch (error) {
+      return error
+    }
+  }
+
+  @Get('user/:id/dogs')
+  async getUserDogs(
+    @Param('id') id: Number
+  ) : Promise<DogModel[]> {
+    try {
+      const dogs = await this.dogService.dogs({
+        where: {masterId: Number(id)}
+      })
+      return dogs
     } catch (error) {
       return error
     }

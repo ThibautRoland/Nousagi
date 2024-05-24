@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 -- CreateTable
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
