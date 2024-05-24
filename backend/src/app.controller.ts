@@ -77,4 +77,44 @@ export class AppController {
       return error;
     }
   }
+
+  @Get('/dog/:id')
+  async getOneDog(@Param('id') id: String): Promise<DogModel> {
+    try {
+      const dog = await this.dogService.dog({id: Number(id)})
+      return dog;
+    } catch (error) {
+      return error
+    }
+  }
+
+  @Post('dog')
+  async createDog(
+    @Body() dogData: { name?: string; race?: string; masterId?: number },
+  ): Promise<DogModel> {
+    try {
+      const dog = this.dogService.createDog(dogData);
+      return dog
+    } catch (error) {
+      return error
+    }
+  }
+
+  @Patch('dog/:id')
+  async updateDog(
+    @Body() dogData: { name?: string; race?: string; masterId?: number },
+    @Param('id') id: String
+  ): Promise<DogModel> {
+    try {
+      const dog = this.dogService.updateDog({
+        where: {id: Number(id)},
+        data: dogData
+      });
+      return dog
+    } catch (error) {
+      return error
+    }
+  }
+  
+
 }
