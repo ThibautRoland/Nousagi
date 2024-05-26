@@ -52,6 +52,6 @@ export class SessionService {
   }
 
   generateJwtToken(email: string, id: number) {
-    return jwt.sign({email, id}, secret_jwt_key)
+    return jwt.sign({email, id}, secret_jwt_key, { expiresIn: '1800s' })
   }
 }
