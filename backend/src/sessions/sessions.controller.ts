@@ -1,5 +1,6 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Res } from '@nestjs/common';
 import { SessionService } from 'src/session.service';
+import { Response } from 'express';
 
 @Controller('sessions')
 export class SessionsController {
@@ -13,11 +14,15 @@ export class SessionsController {
         @Body() userData: {
             email: string,
             password: string
-        }
-    ): Promise<userAuth> {
+        },
+        @Res() res: Response
+    ): Promise<userAuth | null | any> {
         try {
-            const userAuth = { token: "yo", id: -1}
-            return userAuth
+            const userAuth = await this.sessionService.login(userData)
+            if (!userAuth) {
+                return res.status(404).json("user not found")
+            }
+            return res.status(200).json(userAuth)
         } catch (error) {
             return error
         }

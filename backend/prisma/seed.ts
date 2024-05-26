@@ -35,7 +35,6 @@ async function main() {
 
   const password_key = process.env.PASSWORD_SECRET_KEY;
 
-  const password = "password"
 
 //   const encryptedPasswordResult = await prisma.$queryRaw`SELECT pgp_sym_encrypt(${password}, ${password_key}) AS encrypted`;
 //   const encryptedPasswordBytes = encryptedPasswordResult[0].encrypted;

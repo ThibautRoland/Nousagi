@@ -6,10 +6,11 @@ import { UserService } from './user.service';
 import { DogService } from './dog.service';
 import { PrismaService } from './prisma.service';
 import { SessionsController } from './sessions/sessions.controller';
+import { SessionService } from './session.service';
 
 @Module({
   imports: [],
   controllers: [AppController, DogsController, SessionsController],
-  providers: [AppService, UserService, DogService, PrismaService],
+  providers: [AppService, UserService, DogService, PrismaService, SessionService],
 })
 export class AppModule {}
