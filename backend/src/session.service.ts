@@ -8,6 +8,7 @@ dotenv.config();
 
 const password_key = process.env.PASSWORD_SECRET_KEY
 const secretJwtKey = process.env.SECRET_JWT_KEY
+const refreshJwtKey = process.env.REFRESH_JWT_KEY
 
 @Injectable()
 export class SessionService {
@@ -28,9 +29,12 @@ export class SessionService {
             return null
         }
         const token = this.generateJwtToken(body.email, user.id);
+        const refreshToken = this.refreshJwtToken(body.email, user.id)
+
         const userAuth = {
-            token: token,
-            id: user.id
+            token,
+            id: user.id,
+            refreshToken
         }
     
         return userAuth;
@@ -52,6 +56,10 @@ export class SessionService {
   }
 
   generateJwtToken(email: string, id: number) {
-    return jwt.sign({email, id}, secretJwtKey, { expiresIn: '1800s' })
+    return jwt.sign({email, id}, secretJwtKey)
+  }
+
+  refreshJwtToken(email: string, id: number) {
+    return jwt.sign({email, id}, refreshJwtKey, { expiresIn: '1y' })
   }
 }

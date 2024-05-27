@@ -16,11 +16,11 @@ export class SessionsController {
             password: string
         },
         @Res() res: Response
-    ): Promise<userAuth | null | any> {
+    ): Promise<userAuth | object> {
         try {
             const userAuth = await this.sessionService.login(userData)
             if (!userAuth) {
-                return res.status(404).json("user not found")
+                return res.status(404).json({message: "user not found"})
             }
             return res.status(200).json(userAuth)
         } catch (error) {

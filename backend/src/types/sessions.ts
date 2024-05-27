@@ -1,6 +1,7 @@
 type userAuth = {
     token: string,
     id: number,
+    refreshToken?: string
 }
 
 type loginRequest = {
