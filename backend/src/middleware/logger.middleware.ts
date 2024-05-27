@@ -1,6 +1,31 @@
 import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+import { CustomRequest } from 'src/interfaces/custom-request.interface';
+dotenv.config();
 
-export function logger(req: Request, res: Response, next: NextFunction) {
+const secretJwtKey = process.env.SECRET_JWT_KEY
+
+export function logger(req: CustomRequest, res: Response, next: NextFunction) {
   console.log(`logger middleware working`);
-  next();
+  const token = req.header('Authorization')?.split(' ')[1];
+
+  if (!token) {
+    return res.sendStatus(401)
+  }
+
+  jwt.verify(token, secretJwtKey, (err, jwtPayload) => {
+    console.log("from logger middleware", jwtPayload)
+
+    if (err) {
+      return res.sendStatus(403);
+    }
+
+    if (!jwtPayload) {
+      return res.sendStatus(500)
+    }
+
+    req.jwtPayload = jwtPayload;
+    next();
+  });
 };

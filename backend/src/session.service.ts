@@ -7,7 +7,7 @@ import jwt from 'jsonwebtoken';
 dotenv.config();
 
 const password_key = process.env.PASSWORD_SECRET_KEY
-const secret_jwt_key = process.env.SECRET_JWT_KEY
+const secretJwtKey = process.env.SECRET_JWT_KEY
 
 @Injectable()
 export class SessionService {
@@ -52,6 +52,6 @@ export class SessionService {
   }
 
   generateJwtToken(email: string, id: number) {
-    return jwt.sign({email, id}, secret_jwt_key, { expiresIn: '1800s' })
+    return jwt.sign({email, id}, secretJwtKey, { expiresIn: '1800s' })
   }
 }
