@@ -11,8 +11,9 @@ export default function Login() {
             email: formData.get('email') as string,
             password: formData.get('password') as string
         }
-        console.log(credentials)
-        await loginFromApi(credentials);
+        console.log('credentials', credentials)
+        const userAuth = await loginFromApi(credentials);
+        console.log('userAuth', userAuth);
     }
 
     return (<div className="p-4">
