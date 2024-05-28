@@ -32,8 +32,10 @@ export class SessionService {
         const refreshToken = this.refreshJwtToken(body.email, user.id)
 
         const userAuth = {
-            token,
             id: user.id,
+            name: user.name,
+            email: user.email,
+            token,
             refreshToken
         }
     

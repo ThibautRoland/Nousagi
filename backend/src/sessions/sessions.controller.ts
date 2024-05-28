@@ -16,7 +16,7 @@ export class SessionsController {
             password: string
         },
         @Res() res: Response
-    ): Promise<userAuth | object> {
+    ): Promise<userAuth | Response> {
         try {
             const userAuth = await this.sessionService.login(userData)
             if (!userAuth) {

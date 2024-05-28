@@ -1,3 +1,5 @@
+import { getItemFromContext } from "@/api/cookies"
+
 export default function dashboard() {
 
     return (
@@ -5,3 +7,19 @@ export default function dashboard() {
 
     )
 }
+
+export async function getServerSideProps(context : any) {
+
+    const token = getItemFromContext(context, "token")
+    const userId = 
+    
+    
+    console.log("token from dashboard -> ", token)
+
+        return {
+          props: {
+            token: token,
+
+          }
+        }
+  }
