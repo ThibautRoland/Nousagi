@@ -1,4 +1,7 @@
+import { useState } from 'react';
 import '../styles/globals.css'
+import { AuthContext } from '@/context/authContext';
+import { userAuth } from '@/interface/login';
 
 interface Props {
   Component: any
@@ -6,5 +9,14 @@ interface Props {
 }
 
 export default function MyApp({ Component, pageProps }:Props) {
-  return <Component {...pageProps} />
+  const [userAuth, setUserAuth] = useState<userAuth | null>(null);
+
+  return (
+    <AuthContext.Provider value={{
+      userAuth,
+      setUserAuth
+    }}>
+      <Component {...pageProps} />
+    </AuthContext.Provider>
+  )
 }

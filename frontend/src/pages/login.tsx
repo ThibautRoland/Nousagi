@@ -1,11 +1,15 @@
 import { saveTokenInCookie, saveUserIdInCookie } from "@/api/cookies";
 import { loginFromApi } from "@/api/login";
+import { AuthContext } from "@/context/authContext";
+import { Credentials } from "@/interface/login";
 import { useRouter } from "next/router";
 import { format } from "path";
-import { FormEvent, FormEventHandler } from "react";
+import { FormEvent, FormEventHandler, useContext } from "react";
 
 export default function Login() {
     const router = useRouter()
+    const userAuthContext = useContext(AuthContext);
+    // const { userAuth, setUserAuth } = userAuthContext;
 
     async function onSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
@@ -24,7 +28,8 @@ export default function Login() {
                 }
                 saveTokenInCookie(value.token)
                 saveUserIdInCookie(value.id.toString())
-
+                userAuthContext?.setUserAuth(value!);
+                console.log('userAuthcontext -> ', userAuthContext?.userAuth)
                 router.push("/dashboard")
             },
             function(error) { throw error.message }
@@ -38,9 +43,9 @@ export default function Login() {
                 <h1 className="text-center text-2xl py-3">Log into your account</h1>
                 <form onSubmit={onSubmit}>
                     <p className="my-2">email</p>
-                    <input type="text" className="slate-input w-full" placeholder="blabla@example.com" name="email" value="Gail92@yahoo.com"/>
+                    <input type="text" className="slate-input w-full" placeholder="blabla@example.com" name="email" defaultValue="Gail92@yahoo.com"/>
                     <p className="my-2">password</p>
-                    <input type="password" className="slate-input w-full" placeholder="your secret password" name="password" value="password"/>
+                    <input type="password" className="slate-input w-full" placeholder="your secret password" name="password" defaultValue="password"/>
                     <input type="submit" value="login" className="rounded-lg border-slate-600 border-2 mt-3 p-3"/>
                     
                 </form>

@@ -8,6 +8,10 @@ export function saveUserIdInCookie(id : string){
     Cookies.set('userId', id);
 }
 
+// export function saveUserInCookie(userAuth : userAuth){
+//     Cookies.set('user', userAuth);
+// }
+
 export function getItemFromContext(context: any, item: string) : string {
     const allCookiesStr = context.req.headers.cookie as string
     const keyValuePairs: string[] = allCookiesStr.split('; ');
