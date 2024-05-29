@@ -1,4 +1,4 @@
-import { getItemFromContext } from "@/api/cookies"
+import { getItemFromContext, removeUserAuthInCookie } from "@/api/cookies"
 import { AuthContext } from "@/context/authContext"
 import { useRouter } from "next/router"
 import { useContext } from "react"
@@ -10,6 +10,7 @@ export default function dashboard() {
 
     function logout() {
         authContext?.setUserAuth(null)
+        removeUserAuthInCookie();
         router.push('/login')
     }
 

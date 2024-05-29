@@ -1,4 +1,4 @@
-import { saveTokenInCookie, saveUserIdInCookie } from "@/api/cookies";
+import { removeUserAuthInCookie, saveTokenInCookie, saveUserIdInCookie } from "@/api/cookies";
 import { loginFromApi } from "@/api/login";
 import { AuthContext } from "@/context/authContext";
 import { Credentials } from "@/interface/login";
@@ -10,6 +10,13 @@ export default function Login() {
     const router = useRouter()
     const userAuthContext = useContext(AuthContext);
     // const { userAuth, setUserAuth } = userAuthContext;
+    useEffect(() => {
+        router.push('/dashboard')
+    }, [userAuthContext?.userAuth])
+
+    useEffect(() => {
+        removeUserAuthInCookie()
+    })
 
     async function onSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
@@ -28,9 +35,10 @@ export default function Login() {
                 }
                 // saveTokenInCookie(value.token)
                 // saveUserIdInCookie(value.id.toString())
+                console.log('userauthcontext ', userAuthContext)
                 userAuthContext?.setUserAuth(value!);
                 console.log('userAuthcontext -> ', userAuthContext?.userAuth)
-                router.push("/dashboard")
+                // router.push("/dashboard")
             },
             function(error) { throw error.message }
         )

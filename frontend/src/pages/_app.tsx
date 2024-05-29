@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import '../styles/globals.css'
 import { AuthContext } from '@/context/authContext';
 import { userAuth } from '@/interface/login';
@@ -11,12 +11,12 @@ interface Props {
 
 export default function MyApp({ Component, pageProps }:Props) {
   const [userAuth, setUserAuth] = useState<userAuth | null>(null);
+  // const authContext = useContext(AuthContext);
 
   useEffect(() => {
     if (userAuth) {
+      console.log('from useEffect in _app: userAuth -> ', userAuth)
       saveUserAuthInCookie(userAuth)
-    } else {
-      removeUserAuthInCookie();
     }
   }, [userAuth]);
 
