@@ -4,7 +4,7 @@ import { AuthContext } from "@/context/authContext";
 import { Credentials } from "@/interface/login";
 import { useRouter } from "next/router";
 import { format } from "path";
-import { FormEvent, FormEventHandler, useContext } from "react";
+import { FormEvent, FormEventHandler, useContext, useEffect } from "react";
 
 export default function Login() {
     const router = useRouter()
@@ -26,8 +26,8 @@ export default function Login() {
                 if (!value) {
                     return
                 }
-                saveTokenInCookie(value.token)
-                saveUserIdInCookie(value.id.toString())
+                // saveTokenInCookie(value.token)
+                // saveUserIdInCookie(value.id.toString())
                 userAuthContext?.setUserAuth(value!);
                 console.log('userAuthcontext -> ', userAuthContext?.userAuth)
                 router.push("/dashboard")
@@ -35,6 +35,7 @@ export default function Login() {
             function(error) { throw error.message }
         )
     }
+
 
     return (<div className="p-4">
         <div className="flex flex-row">

@@ -1,3 +1,4 @@
+import { Credentials, userAuth } from '@/interface/login';
 import dotenv from 'dotenv';
 dotenv.config();
 import React from 'react';
@@ -24,4 +25,9 @@ export async function loginFromApi(credentials: Credentials) : Promise<userAuth 
     } catch (error) {
         return null
     }
+}
+
+export function logoutFromApi() {
+    
+    
 }
