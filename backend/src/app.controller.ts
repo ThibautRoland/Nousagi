@@ -145,7 +145,7 @@ export class AppController {
   @Get('user/:id/dogs')
   async getUserDogs(
     @Param('id') id: Number
-  ) : Promise<any> {
+  ) : Promise<DogWithMaster[]> {
     try {
       const dogs = await this.dogService.getDogsWithMasters({
         where: {masterId: Number(id)}

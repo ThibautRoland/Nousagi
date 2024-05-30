@@ -8,8 +8,11 @@ export class DogService {
 
   async dog(
     postWhereUniqueInput: Prisma.DogWhereUniqueInput,
-  ): Promise<Dog | null> {
+  ): Promise<DogWithMaster | null> {
     return this.prisma.dog.findUnique({
+      include: {
+        master: true
+      },
       where: postWhereUniqueInput,
     });
   }
@@ -20,9 +23,12 @@ export class DogService {
     cursor?: Prisma.DogWhereUniqueInput;
     where?: Prisma.DogWhereInput;
     orderBy?: Prisma.DogOrderByWithRelationInput;
-  }): Promise<Dog[]> {
+  }): Promise<DogWithMaster[]> {
     const { skip, take, cursor, where, orderBy } = params;
     return this.prisma.dog.findMany({
+      include: {
+        master: true
+      },
       skip,
       take,
       cursor,
@@ -31,8 +37,11 @@ export class DogService {
     });
   }
 
-  async createDog(data: Prisma.DogCreateInput): Promise<Dog> {
+  async createDog(data: Prisma.DogCreateInput): Promise<DogWithMaster> {
     return this.prisma.dog.create({
+      include: {
+        master: true
+      },
       data,
     });
   }
@@ -40,9 +49,12 @@ export class DogService {
   async updateDog(params: {
     where: Prisma.DogWhereUniqueInput;
     data: Prisma.DogUpdateInput;
-  }): Promise<Dog> {
+  }): Promise<DogWithMaster> {
     const { data, where } = params;
     return this.prisma.dog.update({
+      include: {
+        master: true
+      },
       data,
       where,
     });
