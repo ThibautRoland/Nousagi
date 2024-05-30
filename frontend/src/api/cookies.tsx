@@ -1,5 +1,8 @@
 import { userAuth } from '@/interface/login';
+import { parseCookies } from '@/utils/cookies';
+import { IncomingMessage, ServerResponse } from 'http';
 import Cookies from 'js-cookie';
+import { GetServerSidePropsContext } from 'next';
 
 export function saveTokenInCookie(token : string){
     Cookies.set('token', token);
@@ -30,4 +33,12 @@ export function getItemFromContext(context: any, item: string) : string {
     const itemValue = dataMap[item];
 
     return itemValue 
+}
+
+export function getItemFromCookie(context: GetServerSidePropsContext, item: string) {
+    const cookies = parseCookies(context.req as IncomingMessage, context.res as ServerResponse<IncomingMessage>);
+    const encodedUserAuthCookie = cookies.get(item);
+    const decodedCookie = decodeURIComponent(encodedUserAuthCookie!);
+    const parsedCookie = JSON.parse(decodedCookie);
+    return parsedCookie
 }
