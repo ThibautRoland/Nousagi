@@ -128,12 +128,26 @@ export class AppController {
     }
   }
 
+  // @Get('user/:id/dogs')
+  // async getUserDogs(
+  //   @Param('id') id: Number
+  // ) : Promise<DogModel[]> {
+  //   try {
+  //     const dogs = await this.dogService.dogs({
+  //       where: {masterId: Number(id)}
+  //     })
+  //     return dogs
+  //   } catch (error) {
+  //     return error
+  //   }
+  // }
+
   @Get('user/:id/dogs')
   async getUserDogs(
     @Param('id') id: Number
-  ) : Promise<DogModel[]> {
+  ) : Promise<any> {
     try {
-      const dogs = await this.dogService.dogs({
+      const dogs = await this.dogService.getDogsWithMasters({
         where: {masterId: Number(id)}
       })
       return dogs

@@ -53,4 +53,24 @@ export class DogService {
       where,
     });
   }
+
+  async getDogsWithMasters(params: {
+    skip?: number;
+    take?: number;
+    cursor?: Prisma.DogWhereUniqueInput;
+    where?: Prisma.DogWhereInput;
+    orderBy?: Prisma.DogOrderByWithRelationInput;
+  }) {
+    const { skip, take, cursor, where, orderBy } = params;
+    return this.prisma.dog.findMany({
+      include: {
+        master: true,
+      },
+      skip,
+      take,
+      cursor,
+      where,
+      orderBy,
+    });
+  }
 }
