@@ -35,5 +35,11 @@ body {
 @layer components {
   .slate-input {
     @apply bg-slate-200 rounded focus:outline-none p-3;
+  }
 }
+
+@layer base {
+  body {
+    @apply bg-slate-200
+  }
 }
