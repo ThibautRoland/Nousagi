@@ -1,0 +1,4 @@
+interface Dog {
+    id: string,
+    
+}

@@ -27,7 +27,3 @@ export async function loginFromApi(credentials: Credentials) : Promise<userAuth 
     }
 }
 
-export function logoutFromApi() {
-    
-    
-}

@@ -1,5 +1,7 @@
 import { getItemFromContext, removeUserAuthInCookie } from "@/api/cookies"
 import { AuthContext } from "@/context/authContext"
+import { parseCookies } from "@/utils/cookies"
+import { IncomingMessage, ServerResponse } from "http"
 import { useRouter } from "next/router"
 import { useContext } from "react"
 
@@ -27,8 +29,11 @@ export async function getServerSideProps(context : any) {
 
     // const token = getItemFromContext(context, "token")
     const blabla = "blabla"
+    const cookies = parseCookies(context.req as IncomingMessage, context.res as ServerResponse<IncomingMessage>);
+    const encodedUserAuthCookie = cookies.get('userAuth');
+    const decodedCookie = decodeURIComponent(encodedUserAuthCookie!);
+    const userAuthCookie = JSON.parse(decodedCookie);
     
-    console.log("blabla from dashboard -> ", blabla)
 
         return {
           props: {

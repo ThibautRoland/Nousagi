@@ -16,7 +16,7 @@ export default function Login() {
 
     useEffect(() => {
         removeUserAuthInCookie()
-    })
+    }, [])
 
     async function onSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
