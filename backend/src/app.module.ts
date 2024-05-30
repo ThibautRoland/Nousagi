@@ -8,9 +8,10 @@ import { PrismaService } from './prisma.service';
 import { SessionsController } from './sessions/sessions.controller';
 import { SessionService } from './session.service';
 import { logger } from './middleware/logger.middleware';
+import { GetewayModule } from './gateway/gateway.module';
 
 @Module({
-  imports: [],
+  imports: [GetewayModule],
   controllers: [AppController, DogsController, SessionsController],
   providers: [AppService, UserService, DogService, PrismaService, SessionService],
 })
