@@ -16,7 +16,7 @@ type props = {
 export default function dashboard({userDogs} : props) {
     const authContext = useContext(AuthContext)
     const router = useRouter();
-    console.log('AuthContext in dashboard -> ', authContext?.userAuth)
+    // console.log('AuthContext in dashboard -> ', authContext?.userAuth)
 
     function logout() {
         authContext?.setUserAuth(null)

@@ -17,7 +17,7 @@ export default function MyApp({ Component, pageProps }:Props) {
 
   useEffect(() => {
     if (userAuth) {
-      console.log('from useEffect in _app: userAuth -> ', userAuth)
+      // console.log('from useEffect in _app: userAuth -> ', userAuth)
       saveUserAuthInCookie(userAuth)
     }
   }, [userAuth]);
