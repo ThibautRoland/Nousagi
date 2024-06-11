@@ -14,7 +14,7 @@ export const Chat = () => {
         socket.on('onMessage', (data) => {
             console.log("onMessage event received!")
             console.log(data)
-            // setMessages((prev) => [...prev, data.content])
+            setMessages((prev) => [...prev, data.content])
         });
 
         return () => {
@@ -27,7 +27,7 @@ export const Chat = () => {
     function sendMessage() {
         socket.emit('newMessage', message);
         setMessage('');
-        setMessages((prev) => [...prev, message])
+        // setMessages((prev) => [...prev, message])
         console.log(messages)
     }
 
