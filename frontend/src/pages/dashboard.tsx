@@ -1,6 +1,8 @@
 import { getItemFromContext, getItemFromCookie, removeUserAuthInCookie } from "@/api/cookies"
 import { getUserDogsFromApi } from "@/api/dogs"
+import { Chat } from "@/components/chat"
 import { AuthContext } from "@/context/authContext"
+import { WebsocketProvider, socket } from "@/context/WebsocketContext"
 import { parseCookies } from "@/utils/cookies"
 import { IncomingMessage, ServerResponse } from "http"
 import { GetServerSidePropsContext } from "next"
@@ -14,7 +16,7 @@ type props = {
 export default function dashboard({userDogs} : props) {
     const authContext = useContext(AuthContext)
     const router = useRouter();
-    console.log('AuthContext in dashboard -> ', authContext?.userAuth)
+    // console.log('AuthContext in dashboard -> ', authContext?.userAuth)
 
     function logout() {
         authContext?.setUserAuth(null)
@@ -29,7 +31,7 @@ export default function dashboard({userDogs} : props) {
             <div className="basis-2/3">
                 <div className="grid grid-cols-2 gap-5">
                     {userDogs?.map((dog, i) => (
-                        <div key={i} className="border-2 border-indigo-600">
+                        <div key={i} className="border-2 border-indigo-600 p-4">
                             <p>{dog.name}</p>
                             <p>{dog.race}</p>
                         </div>
@@ -38,7 +40,9 @@ export default function dashboard({userDogs} : props) {
 
             </div>
             <div className="basis-1/3">
-
+                {/* <WebsocketProvider value={socket}> */}
+                    <Chat />
+                {/* </WebsocketProvider> */}
             </div>
         </div>
     </div>)

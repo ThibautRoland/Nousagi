@@ -3,6 +3,8 @@ import '../styles/globals.css'
 import { AuthContext } from '@/context/authContext';
 import { userAuth } from '@/interface/login';
 import { removeUserAuthInCookie, saveUserAuthInCookie } from '@/api/cookies';
+import { WebsocketProvider, socket } from '@/context/WebsocketContext';
+
 
 interface Props {
   Component: any
@@ -15,7 +17,7 @@ export default function MyApp({ Component, pageProps }:Props) {
 
   useEffect(() => {
     if (userAuth) {
-      console.log('from useEffect in _app: userAuth -> ', userAuth)
+      // console.log('from useEffect in _app: userAuth -> ', userAuth)
       saveUserAuthInCookie(userAuth)
     }
   }, [userAuth]);
@@ -25,7 +27,9 @@ export default function MyApp({ Component, pageProps }:Props) {
       userAuth,
       setUserAuth
     }}>
-      <Component {...pageProps} />
+      <WebsocketProvider value={socket}>
+        <Component {...pageProps} />
+      </WebsocketProvider>
     </AuthContext.Provider>
   )
 }

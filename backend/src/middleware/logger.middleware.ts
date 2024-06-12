@@ -7,7 +7,6 @@ dotenv.config();
 const secretJwtKey = process.env.SECRET_JWT_KEY
 
 export function logger(req: CustomRequest, res: Response, next: NextFunction) {
-  console.log(`logger middleware working`);
   const token = req.header('Authorization')?.split(' ')[1];
 
   if (!token) {
@@ -15,8 +14,6 @@ export function logger(req: CustomRequest, res: Response, next: NextFunction) {
   }
 
   jwt.verify(token, secretJwtKey, (err, jwtPayload) => {
-    console.log("from logger middleware", jwtPayload)
-
     if (err) {
       return res.sendStatus(403);
     }
